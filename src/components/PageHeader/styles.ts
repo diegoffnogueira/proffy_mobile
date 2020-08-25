@@ -17,8 +17,14 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 24,
     lineHeight: 32,
-    maxWidth: 160,
-    marginVertical: 40
+    maxWidth: 300,
+    marginVertical: 20
+  },
+
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   }
 })
 
