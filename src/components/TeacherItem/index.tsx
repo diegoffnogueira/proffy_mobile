@@ -1,5 +1,5 @@
 import React from "react";
-import {Image, Text, View} from "react-native";
+import {Image, Text, View, Linking} from "react-native";
 
 import heartOutlineIcon from "../../assets/images/icons/heart-outline.png"
 import unfavoriteIcon from "../../assets/images/icons/unfavorite.png"
@@ -7,29 +7,46 @@ import whatsappIcon from "../../assets/images/icons/whatsapp.png"
 import styles from "./styles";
 import {RectButton} from "react-native-gesture-handler";
 
-function TeacherItem() {
+export interface Teacher {
+  id: number;
+  name: string;
+  bio: string;
+  subject: string;
+  avatar: string;
+  cost: number;
+  whatsapp: string;
+}
+
+interface TeacherItensProps {
+  teacher: Teacher;
+}
+
+const TeacherItem:React.FC<TeacherItensProps> = ({teacher}) => {
+
+  function handleLinkToWhatsapp() {
+    Linking.openURL(`whatsapp://send?text=Hello World!&phone=${teacher.whatsapp}`)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.profile}>
-        <Image style={styles.avatar} source={{ uri: "https://github.com/diegoffnogueira.png" }} />
+        <Image style={styles.avatar} source={{ uri: teacher.avatar }} />
 
         <View style={styles.profileInfo}>
-          <Text style={styles.name}>Diego Nogueira</Text>
-          <Text style={styles.subject}>Matemática</Text>
+          <Text style={styles.name}>{teacher.name}</Text>
+          <Text style={styles.subject}>{teacher.subject}</Text>
         </View>
       </View>
 
       <Text style={styles.bio}>
-        Entusiasta das melhores tecnologias e fera na matemática avançada.
-        {"\n"}
-        Apaixonado por calcular coisas na calculadora e por fazer conta com dízima periódica.
+        {teacher.bio}
       </Text>
 
       <View style={styles.footer}>
         <Text style={styles.price}>
           Preço/hora {"  "}
           <Text style={styles.priceValue}>
-            R$ 100,00
+            R$ {teacher.cost}
           </Text>
         </Text>
 
@@ -39,7 +56,7 @@ function TeacherItem() {
             <Image source={unfavoriteIcon} />
           </RectButton>
 
-          <RectButton style={styles.contactButton}>
+          <RectButton onPress={handleLinkToWhatsapp} style={styles.contactButton}>
             <Image source={whatsappIcon} />
             <Text style={styles.contactButtonText}>
               Entrar em contato
